@@ -1,7 +1,7 @@
 package Unix::Lsof::Result;
 
 use 5.008;
-use version; our $VERSION = qv('0.0.2');
+use version; our $VERSION = qv('0.0.3');
 
 use warnings;
 use strict;
@@ -17,12 +17,13 @@ use overload bool => sub {
 };
 
 sub _new {
-    my ( $class, $parsed, $err, $raw ) = @_;
+    my ( $class, $parsed, $err, $raw,$opt ) = @_;
 
     my $self = {
                 output => $parsed,
                 error  => $err,
                 _raw_output => $raw,
+                options => $opt,
     };
     bless $self, $class;
 
@@ -128,9 +129,10 @@ sub get_hashof_rows {
             }
             my $ukey = join $;, sort values %rline;
             next LINELOOP if !defined $ukey;
-            
-            push @{ $ret{$hkey} }, \%rline
-                if ( !$uniqify{$hkey}{ $ukey }++ );
+
+            if ( !$uniqify{$hkey}{ $ukey }++ ) {
+                push @{ $ret{$hkey} }, \%rline
+            }
         }
     }
     delete $self->{_query};
@@ -195,7 +197,7 @@ sub _setup_fields {
         ) {
             push @temp_fields, $f;
         } else {
-            warn "$f is not in the list of fields returned by lsof";
+            $self->_iwarn("$f is not in the list of fields returned by lsof");
         }
     }
 
@@ -218,7 +220,7 @@ sub _validate {
     } elsif ( !ref($filter) ) {
         return $filter eq $value ? 1 : 0;
     } else  {
-        warn qq(Invalid filter specified for "$filter_key");
+        $self->_iwarn(qq(Invalid filter specified for "$filter_key"));
     }
 }
 
@@ -273,6 +275,17 @@ sub _get_field_ids {
 }
 
 
+sub _iwarn {
+    my $self = shift;
+    my $message = $_[0];
+    if ( $self->{options}{suppress_errors} ) {
+        $self->{error} .= $message;
+    } else {
+        warn @_;
+    }
+}
+
+
 =head1 NAME
 
 Unix::Lsof::Result - Perlish interface to lsof output
@@ -280,7 +293,7 @@ Unix::Lsof::Result - Perlish interface to lsof output
 
 =head1 VERSION
 
-This document describes Unix::Lsof::Result version 0.0.2
+This document describes Unix::Lsof::Result version 0.0.3
 
 
 =head1 SYNOPSIS
