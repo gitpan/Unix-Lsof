@@ -29,7 +29,7 @@ can_ok('Unix::Lsof',qw(lsof parse_lsof_output));
 my @lsof_result;
 
 SKIP: {
-    skip "Test::Exception not installed", 7 if $hasnt_test_exception;
+    skip "Test::Exception not installed", 9 if $hasnt_test_exception;
 
 
     lives_ok { @lsof_result = lsof("/doesnaexist") } "survives on non-existing file";

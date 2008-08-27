@@ -1,5 +1,9 @@
 Revision history for Unix-Lsof
 
+0.0.4   Wed 08 27 17:35:00 2008
+        - Fixed number of skip counts which made test fail on systems without Test::Exception
+        - Possibly fixed issue with failed tests on FreeBSD
+
 0.0.3   Mon 08 25 16:02:00 2008
         - Fixed http://rt.cpan.org/Ticket/Display.html?id=38474 (spurious warnings and suppress_errors)
         - Fixed http://rt.cpan.org/Ticket/Display.html?id=38440 (tcp/tpi parsing)

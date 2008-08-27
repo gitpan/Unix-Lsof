@@ -1,7 +1,7 @@
 package Unix::Lsof::Result;
 
 use 5.008;
-use version; our $VERSION = qv('0.0.3');
+use version; our $VERSION = qv('0.0.4');
 
 use warnings;
 use strict;
@@ -130,8 +130,9 @@ sub get_hashof_rows {
             my $ukey = join $;, sort values %rline;
             next LINELOOP if !defined $ukey;
 
-            if ( !$uniqify{$hkey}{ $ukey }++ ) {
-                push @{ $ret{$hkey} }, \%rline
+            if ( !exists $uniqify{$hkey} || !exists $uniqify{$hkey}{$ukey} ) {
+                push @{ $ret{$hkey} }, \%rline;
+                $uniqify{$hkey}{$ukey}=1;
             }
         }
     }
@@ -293,7 +294,7 @@ Unix::Lsof::Result - Perlish interface to lsof output
 
 =head1 VERSION
 
-This document describes Unix::Lsof::Result version 0.0.3
+This document describes Unix::Lsof::Result version 0.0.4
 
 
 =head1 SYNOPSIS
