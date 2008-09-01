@@ -1,7 +1,7 @@
 package Unix::Lsof::Result;
 
 use 5.008;
-use version; our $VERSION = qv('0.0.4');
+use version; our $VERSION = qv('0.0.5');
 
 use warnings;
 use strict;
@@ -115,7 +115,7 @@ sub get_hashof_rows {
     for my $pid ( keys %outp ) {
       LINELOOP:
         for my $file ( @{ $outp{$pid}{files} } ) {
-            my $hkey = $self->_get_value( $full_key, $pid, $file );
+            my $hkey = $self->_get_value( $full_key, $pid, $file ) || next LINELOOP;
             my $line = $self->_get_line( $pid, $file ) || next LINELOOP;
 
             my $i = 0;
@@ -294,7 +294,7 @@ Unix::Lsof::Result - Perlish interface to lsof output
 
 =head1 VERSION
 
-This document describes Unix::Lsof::Result version 0.0.4
+This document describes Unix::Lsof::Result version 0.0.5
 
 
 =head1 SYNOPSIS

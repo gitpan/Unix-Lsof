@@ -1,7 +1,7 @@
 package Unix::Lsof;
 
 use 5.008;
-use version; our $VERSION = qv('0.0.4');
+use version; our $VERSION = qv('0.0.5');
 
 use warnings;
 use strict;
@@ -221,7 +221,7 @@ Unix::Lsof - Wrapper to the Unix lsof utility
 
 =head1 VERSION
 
-This document describes Unix::Lsof version 0.0.4
+This document describes Unix::Lsof version 0.0.5
 
 
 =head1 SYNOPSIS

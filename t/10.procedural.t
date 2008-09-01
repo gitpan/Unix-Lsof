@@ -78,7 +78,7 @@ my $sock = IO::Socket::INET->new(Listen    => 5,
 ok (($result,$err) = lsof("-n","-p",$mypid), "returns ok on examining a process");
 close $fh;
 
-my @ipv4 = grep { $_->{"file type"} eq "IPv4" } @{$result->{$mypid}{files}};
+my @ipv4 = grep { $_->{"file type"} eq "IPv4" && $_->{"protocol name"} eq "TCP" } @{$result->{$mypid}{files}};
 is ($ipv4[0]->{"file name"},"127.0.0.1:42424","Found open network socket");
 
 $sock->close();
