@@ -1,5 +1,9 @@
 Revision history for Unix-Lsof
 
+0.1.0   Wed 11 20 11:41:00 2013
+        - Minuscule update to support task IDs
+        - bumped version number to 0.1.0 because no serious bug reports in 4 years
+
 0.0.9   Fri 07 24 15:29:00 2009
         - Fixed failing tests ID 4752286, 4745065, 4740865 (removed skip for Test::Warn on a test file)
 

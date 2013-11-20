@@ -1,6 +1,6 @@
 use Test::More;
 use IO::Socket::INET;
-use Fatal qw(open close unlink link);
+use Fatal qw(open close unlink symlink);
 
 use strict;
 use warnings;

@@ -1,7 +1,7 @@
 package Unix::Lsof::Result;
 
 use 5.008;
-use version; our $VERSION = qv('0.0.9');
+use version; our $VERSION = qv('0.1.0');
 
 use warnings;
 use strict;
@@ -294,7 +294,7 @@ Unix::Lsof::Result - Perlish interface to lsof output
 
 =head1 VERSION
 
-This document describes Unix::Lsof::Result version 0.0.9
+This document describes Unix::Lsof::Result version 0.1.0
 
 
 =head1 SYNOPSIS
@@ -692,7 +692,7 @@ Marc Beyer  C<< <japh@tirwhan.org> >>
 
 =head1 LICENCE AND COPYRIGHT
 
-Copyright (c) 2008,2009, Marc Beyer C<< <japh@tirwhan.org> >>. All rights reserved.
+Copyright (c) 2008-2013,2009, Marc Beyer C<< <japh@tirwhan.org> >>. All rights reserved.
 
 This module is free software; you can redistribute it and/or
 modify it under the same terms as Perl itself. See L<perlartistic>.

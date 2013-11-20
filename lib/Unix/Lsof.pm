@@ -1,7 +1,7 @@
 package Unix::Lsof;
 
 use 5.008;
-use version; our $VERSION = qv('0.0.9');
+use version; our $VERSION = qv('0.1.0');
 
 use warnings;
 use strict;
@@ -21,15 +21,16 @@ our %op_field = (
     D => q(major/minor device number),
     f => q(file descriptor),
     F => q(structure address),
+    g => q(process group id),
     G => q(flags),
     i => q(inode number),
     k => q(link count),
+    K => q(task id),
     l => q(lock status),
     L => q(login name),
     n => q(file name),
     N => q(node identifier),
     o => q(file offset),
-    g => q(process group id),
     p => q(process id),
     P => q(protocol name),
     r => q(raw device number),
@@ -135,7 +136,7 @@ sub _find_binary {
     my $bin;
   PATHLOOP:
     for my $p (@path) {
-        if ( -e $p . "/lsof" ) {
+        if ( -f $p . "/lsof" && -x _ ) {
             $bin = $p . "/lsof";
             last PATHLOOP;
         }
@@ -217,7 +218,9 @@ sub _parseelements {
                 $result{ $op_field{$fident} }{ $key } = $fc;
             }
         } else {
+#            warn $fident. " - ".$op_field{$fident}." - ".$content;
             $result{ $op_field{$fident} } = $content;
+#            exit;
         }
     }
     return \%result;
@@ -233,7 +236,7 @@ Unix::Lsof - Wrapper to the Unix lsof utility
 
 =head1 VERSION
 
-This document describes Unix::Lsof version 0.0.9
+This document describes Unix::Lsof version 0.1.0
 
 
 =head1 SYNOPSIS
@@ -357,8 +360,9 @@ Process field names are:
     "process id"
     "process group id"
     "parent pid"
+    "task id"
     "user id"
-    
+
 File field names are:
 
     "access mode"
@@ -546,7 +550,7 @@ Marc Beyer  C<< <japh@tirwhan.org> >>
 
 =head1 LICENCE AND COPYRIGHT
 
-Copyright (c) 2009, Marc Beyer C<< <japh@tirwhan.org> >>. All rights reserved.
+Copyright (c) 2008-2013, Marc Beyer C<< <japh@tirwhan.org> >>. All rights reserved.
 
 This module is free software; you can redistribute it and/or
 modify it under the same terms as Perl itself. See L<perlartistic>.
